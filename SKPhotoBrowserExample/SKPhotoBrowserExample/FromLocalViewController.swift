@@ -56,6 +56,7 @@ extension FromLocalViewController {
 
 extension FromLocalViewController {
     @objc(collectionView:didSelectItemAtIndexPath:) func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let photos = [SKPhoto.videoWithImageURL("https://path-to-video-url.mp4", thumbnail: "https://path_to_thubnail.png")]
         let browser = SKPhotoBrowser(photos: images, initialPageIndex: indexPath.row)
         browser.delegate = self
 

@@ -28,7 +28,8 @@ open class SKZoomingScrollView: UIScrollView {
     fileprivate(set) var imageView: SKDetectingImageView!
     fileprivate var tapView: SKDetectingView!
     fileprivate var indicatorView: SKIndicatorView!
-    
+    fileprivate var videoBtn: SKVideoButton!
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
@@ -68,6 +69,15 @@ open class SKZoomingScrollView: UIScrollView {
         indicatorView = SKIndicatorView(frame: frame)
         addSubview(indicatorView)
         
+        //videobutton
+        videoBtn = SKVideoButton(frame: frame)
+        videoBtn.center = center
+        videoBtn.tintColor = .white
+        videoBtn.isHidden = true
+        if let browser = browser {
+            videoBtn.addTarget(browser, action: #selector(SKPhotoBrowser.openVideo), for: .touchUpInside)
+        }
+        addSubview(videoBtn)
         // self
         backgroundColor = .clear
         delegate = self
@@ -75,7 +85,11 @@ open class SKZoomingScrollView: UIScrollView {
         showsVerticalScrollIndicator = SKPhotoBrowserOptions.displayVerticalScrollIndicator
         autoresizingMask = [.flexibleWidth, .flexibleTopMargin, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin]
     }
-    
+    func updateVideoBtn(){
+        if photo != nil {
+            videoBtn.isHidden = !(photo.isVideo())
+        }
+    }
     // MARK: - override
     
     open override func layoutSubviews() {
@@ -199,10 +213,12 @@ open class SKZoomingScrollView: UIScrollView {
         if !flag {
             if photo.underlyingImage == nil {
                 indicatorView.startAnimating()
+                videoBtn.isHidden = true
             }
             photo.loadUnderlyingImageAndNotify()
         } else {
             indicatorView.stopAnimating()
+            updateVideoBtn()
         }
         
         if let image = photo.underlyingImage, photo != nil {

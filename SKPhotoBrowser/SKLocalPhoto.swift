@@ -32,7 +32,13 @@ open class SKLocalPhoto: NSObject, SKPhotoProtocol {
         photoURL = url
         underlyingImage = holder
     }
+    public func getVideoUrl() -> String? {
+        return nil
+    }
     
+    public func isVideo() -> Bool {
+        return false
+    }
     open func checkCache() {}
     
     open func loadUnderlyingImageAndNotify() {

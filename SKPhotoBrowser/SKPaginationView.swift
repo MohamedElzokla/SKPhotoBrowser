@@ -172,3 +172,28 @@ class SKNextButton: SKPaginationButton {
         setup(imageName)
     }
 }
+class SKVideoButton: SKPaginationButton {
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        backgroundColor = .clear
+        translatesAutoresizingMaskIntoConstraints = true
+        autoresizingMask = [.flexibleBottomMargin,
+                            .flexibleLeftMargin,
+                            .flexibleRightMargin,
+                            .flexibleTopMargin]
+        contentMode = .center
+        tintColor = .white
+        if #available(iOS 13.0, *) {
+            setBackgroundImage(UIImage(systemName: "play.circle"), for: .normal)
+        } else {
+            setBackgroundImage(UIImage(named: "video_gallery"), for: .normal)
+
+            // Fallback on earlier versions
+        }
+    }
+}

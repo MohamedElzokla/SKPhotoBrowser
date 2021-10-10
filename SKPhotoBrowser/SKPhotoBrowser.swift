@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVKit
 
 public let SKPHOTO_LOADING_DID_END_NOTIFICATION = "photoLoadingDidEndNotification"
 
@@ -316,7 +317,19 @@ public extension SKPhotoBrowser {
     @objc func gotoNextPage() {
         jumpToPageAtIndex(currentPageIndex + 1)
     }
-    
+    @objc func openVideo(){
+        if photos[currentPageIndex].isVideo() ,
+           let videoUrl = photos[currentPageIndex].getVideoUrl() ,
+           let url = URL(string: videoUrl) {
+            let player = AVPlayer(url: url)
+            let playerViewController = AVPlayerViewController()
+            playerViewController.player = player
+            self.present(playerViewController, animated: true) {
+              playerViewController.player?.play()
+            }
+        }
+        
+    }
     func cancelControlHiding() {
         if controlVisibilityTimer != nil {
             controlVisibilityTimer.invalidate()
