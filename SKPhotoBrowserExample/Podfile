@@ -3,4 +3,6 @@ use_frameworks!
 
 target "SKPhotoBrowserExample" do
     pod 'SDWebImage'
+    pod 'SKPhotoBrowser', :git => 'https://github.com/MohamedElzokla/SKPhotoBrowser.git'
+
 end
